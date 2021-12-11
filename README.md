@@ -38,7 +38,7 @@ Run ``` python coco_trans.py.py ``` for Converting mask img into json file of co
 you must download pretrained [R-101-FPN](https://download.openmmlab.com/mmdetection/v2.0/mask_rcnn/mask_rcnn_r101_fpn_2x_coco/mask_rcnn_r101_fpn_2x_coco_bbox_mAP-0.408__segm_mAP-0.366_20200505_071027-14b391c7.pth)  as backbone and put it in ```./mmdetection/traon_config``` folder
 
 Run ```sh model.sh train``` for Training model
-## Evaluation
+## Inference
 Run ```sh model.sh test [.pth file]``` for inference
 
 ```.json``` file will be save in ```./mmdetection/```
