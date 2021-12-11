@@ -206,8 +206,8 @@ log_config = dict(interval=50, hooks=[dict(type='TextLoggerHook')])
 custom_hooks = [dict(type='NumClassCheckHook')]
 dist_params = dict(backend='nccl')
 log_level = 'INFO'
-load_from = '.train_config/pretrain/mask_rcnn_r101_fpn_mstrain-poly_3x_coco_20210524_200244-5675c317.pth'
+load_from = './train_config/mask_rcnn_r101_fpn_mstrain-poly_3x_coco_20210524_200244-5675c317.pth'
 resume_from = None
 workflow = [('train', 1)]
-work_dir = './work_dirs/mask_rcnn_r101_fpn_2x_coco'
+work_dir = './train_config/'
 gpu_ids = range(0, 1)
