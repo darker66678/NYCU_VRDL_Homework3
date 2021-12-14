@@ -13,15 +13,11 @@ category_ids = {
 def annToRLE(segm, i_w, i_h):
     h, w = i_h, i_w
     if type(segm) == list:
-        # polygon -- a single object might consist of multiple parts
-        # we merge all parts into one mask rle code
         rles = cocomask.frPyObjects(segm, h, w)
         rle = cocomask.merge(rles)
     elif type(segm['counts']) == list:
-        # uncompressed RLE
         rle = cocomask.frPyObjects(segm, h, w)
     else:
-        # rle
         rle = ann['segmentation']
     return rle
 
@@ -52,7 +48,7 @@ def annotation_format(img, image_id, category_id, annotation_id):
     annotation = {
         "segmentation": area_rle,
         "area": area,
-        "iscrowd": 1,
+        "iscrowd": 0,
         "image_id": image_id,
         'bbox': list(cocomask.toBbox(area_rle)),
         "category_id": category_id,
@@ -122,6 +118,7 @@ if __name__ == "__main__":
     # Get the standard COCO JSON format
     path = './nucleus/train'
     allFileList = os.listdir(path)
+    print("preparing train.json")
     image_id = 1
     annotation_id = 1
     coco_format = get_coco_json_format()
@@ -138,4 +135,23 @@ if __name__ == "__main__":
 
     with open("./mmdetection/nucleus/{}.json".format("train"), "w") as outfile:
         json.dump(coco_format, outfile, indent=4)
-        print(file)
+        print("finish!!")
+
+    # validation data
+    print("preparing val.json")
+    image_id = 1
+    annotation_id = 1
+    coco_format = get_coco_json_format()
+    coco_format["categories"] = create_category_annotation(category_ids)
+    coco_format["images"] = []
+    coco_format["annotations"] = []
+
+    file = allFileList[-1]
+    mask_path = f'./nucleus/train/{file}/masks/'
+    coco_format["images"], coco_format["annotations"], annotation_id = images_annotations_info(
+        mask_path, file, image_id, coco_format["annotations"], coco_format["images"], annotation_id)
+    image_id = image_id+1
+
+    with open("./mmdetection/nucleus/{}.json".format("val"), "w") as outfile:
+        json.dump(coco_format, outfile, indent=4)
+        print("finish!!")

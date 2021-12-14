@@ -1,7 +1,8 @@
 conda install pytorch torchvision -c pytorch
-pip install openmim
-mim install mmdet
 pip install mmcv-full
-pip install mmdet
+cd mmdetection
+pip install -r requirements/build.txt
+pip install -v -e .  
+cd ..
 cd ./cocoapi/PythonAPI
 python setup.py install

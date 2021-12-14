@@ -1,8 +1,8 @@
 if [ $1 == "train" ]; then
-    python tools/train.py ./work_dirs/mask_rcnn_r101_fpn_2x_coco/mask_rcnn_r101_fpn_2x_coco.py
+    python tools/train.py ./train_config/config.py
 elif [ $1 == "test" ]; then
-    python tools/test.py ./work_dirs/mask_rcnn_r101_fpn_2x_coco/mask_rcnn_r101_fpn_2x_coco.py $2  --format-only --options "jsonfile_prefix=./results"
-elif [$1 =="show" ]; then
-    python tools/test.py ./work_dirs/mask_rcnn_r101_fpn_2x_coco/mask_rcnn_r101_fpn_2x_coco.py $2  --show
+    python tools/test.py ./train_config/config.py $2  --format-only --options "jsonfile_prefix=./results" --out prediction.pkl
+elif [ $1 == "show" ]; then
+    python tools/test.py ./train_config/config.py $2  --show
 fi
 

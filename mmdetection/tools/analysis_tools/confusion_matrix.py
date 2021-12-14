@@ -7,7 +7,7 @@ import numpy as np
 from matplotlib.ticker import MultipleLocator
 from mmcv import Config, DictAction
 from mmcv.ops import nms
-
+import math
 from mmdet.core.evaluation.bbox_overlaps import bbox_overlaps
 from mmdet.datasets import build_dataset
 
@@ -204,6 +204,8 @@ def plot_confusion_matrix(confusion_matrix,
     # draw confution matrix value
     for i in range(num_classes):
         for j in range(num_classes):
+            if (math.isnan(confusion_matrix[i, j])):
+                confusion_matrix[i, j] = 0
             ax.text(
                 j,
                 i,

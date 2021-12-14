@@ -1,3 +1,4 @@
+import json
 import os
 import shutil
 
@@ -25,7 +26,15 @@ for img in os.listdir(path):
     if img[-3:] == "png":
         shutil.copy(path+img, test_destination+img)
 
-# deal with test.json
-shutil.copy(r"./nucleus/test_img_ids.json", r'./mmdetection/nucleus/')
+path = r'./nucleus/test_img_ids.json'
+with open(path)as f:
+    data = json.load(f)
+test_json = {'images': data,
+             'categories': [{"supercategory": "nucleus",
+                            "id": 1,
+                             "name": "nucleus"}]
+             }
+with open("./mmdetection/nucleus/{}.json".format("test_img_ids"), "w") as outfile:
+    json.dump(test_json, outfile, indent=4)
 
 print("collation finish!")
